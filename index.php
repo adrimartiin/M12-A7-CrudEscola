@@ -19,13 +19,12 @@
                 <label>Contraseña</label>
                 <input type="text" name="pwd" id="pwd">
                 <span id="pwd_error" class="error-message"></span>
-
-                <?php if (isset($_SESSION['error'])): ?>
-                    <span class="error-message" style="color: red;"><?php echo $_SESSION['error']; ?></span>
-                    <?php unset($_SESSION['error']); ?>
-                <?php endif; ?>
-
                 <button type="submit" class="login-button" id="submitBtn">Acceder</button>
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 1) {
+                    echo "<p style='color: red'>Usuario o contraseña incorrectos</p>";
+                }
+                ?>
             </form>
         </div>
     </div>
