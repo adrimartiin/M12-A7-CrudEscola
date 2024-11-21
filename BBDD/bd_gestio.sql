@@ -28,6 +28,7 @@ CREATE TABLE tbl_notas (
 /* ---- ALTER TABLES PARA LAS FK ----- */
 ALTER TABLE tbl_notas ADD FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario);
 ALTER TABLE tbl_notas ADD FOREIGN KEY (id_materia) REFERENCES tbl_materias(id_materia);
+ALTER TABLE tbl_usuario ADD COLUMN password_usuario VARCHAR(50) AFTER nombre_usuario;
 
 /*---- INSERTAR DATOS EN LAS TABLAS -----*/
 
