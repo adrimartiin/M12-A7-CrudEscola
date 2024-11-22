@@ -1,5 +1,6 @@
 document.getElementById("usuario").onblur = validaUsuario;
 document.getElementById("pwd").onblur = validaPassword;
+document.getElementById("cargaForm").onsubmit = validaForm;
 
 function validaUsuario() {
 let usuario = document.getElementById("usuario").value;
@@ -31,6 +32,13 @@ if(pwd === "" || pwd === null){
     input_pwd.classList.remove("error-border");
     return true;
 }
+}
+
+function validaForm(event) {
+    event.preventDefault();
+    if (validaUsuario() && validaPassword()) {
+        document.getElementById("cargaForm").submit(); 
+    }
 }
 
 
