@@ -16,14 +16,14 @@ CREATE TABLE tbl_usuario (
 CREATE TABLE tbl_materias (
     id_materia INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nombre_materia VARCHAR(50) NOT NULL,
-    horas_materia TIME NOT NULL
+    horas_materia VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE tbl_notas (
     id_nota INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_usuario INT NOT NULL,
     id_materia INT NOT NULL,
-    nota_alumno_materia DECIMAL(3,2) NOT NULL,
+    nota_alumno_materia DECIMAL(4,2) NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES tbl_usuario(id_usuario),
     FOREIGN KEY (id_materia) REFERENCES tbl_materias(id_materia)
 );
