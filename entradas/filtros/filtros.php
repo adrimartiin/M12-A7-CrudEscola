@@ -6,4 +6,6 @@
     // $parametros=[];
     // $tipos='';
 
-    // if (!empty($))
+    // if (!empty($_GET['nombre'])){
+
+    // }

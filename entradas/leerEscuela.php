@@ -54,11 +54,10 @@
             echo "<table class='table table-bordered table-hover table-striped text-center'>";
             echo "<thead class='table-dark'>
                     <tr>
-                        <th>↓ Id ↑</th>
+                        <th>↓ DNI ↑</th>
                         <th>↓ Nombre ↑</th>
                         <th>↓ Email ↑</th>
                         <th>↓ Teléfono ↑</th>
-                        <th>↓ Rol ↑</th>
                         <th>Acciones</th>
                     </tr>
                   </thead>";
@@ -67,11 +66,10 @@
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             foreach ($rows as $row) {
                 echo "<tr class='align-middle'>
-                        <td>" . htmlspecialchars($row["id_usuario"]) . "</td>
+                        <td>" . htmlspecialchars($row["dni_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["nombre_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["email_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["telf_usuario"]) . "</td>
-                        <td>" . htmlspecialchars($row["rol_usuario"]) . "</td>
                         <td>
                             <a href='editarRegistro.php?id=" . htmlspecialchars($row["id_usuario"]) . "' class='btn btn-warning btn-sm me-2'>Editar</a>
                             <a href='eliminarRegistro.php?id=" . htmlspecialchars($row["id_usuario"]) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este usuario?\")'>Eliminar</a>
