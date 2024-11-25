@@ -70,33 +70,3 @@ VALUES
 ('fmartinez', 'qweQWE123', 'fatima.martinez@gmail.com', '123456789', '57921632C', 'Profesor'),
 ('aplans', 'qweQWE123', 'agnes.plans@gmail.com', '896874891', '30092312T', 'Profesor'),
 ('aDeSantos', 'qweQWE123', 'alberto.DeSantos@gmail.com', '674986789', '08921794K', 'Profesor');
-
-
-
-/* Datos para tbl_materias */
-INSERT INTO tbl_materias (nombre_materia, horas_materia)
-VALUES
-('Matemáticas', 60),  
-('Lengua Española', 90), 
-('Historia', 75),  
-('Inglés', 60),  
-('Física', 80), 
-('Química', 60),  
-('Geografía', 90), 
-('Biología', 70),  
-('Programación', 60);  
-
-/* Datos para tbl_notas */
-INSERT INTO tbl_notas (id_usuario, id_materia, nota_alumno_materia)
-VALUES
-(1, 1, 8.5),  
-(2, 2, 7.0),  
-(3, 3, 6.5),  
-(4, 4, 9.0),  
-(5, 5, 5.5),  
-(6, 6, 6.0),  
-(7, 7, 7.5),  
-(8, 8, 8.0),  
-(9, 9, 9.5),  
-(10, 1, 10.0);
-
