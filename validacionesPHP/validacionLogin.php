@@ -14,15 +14,16 @@ try {
     $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) === 1) { 
+        $fila = mysqli_fetch_assoc($result);
         // Comprueba si el usuario y contraseña coinciden
-        if ($result['rol_usuario'] === 'Admin'){
+        if ($fila['rol_usuario'] === 'Admin'){
             header('Location: ../entradas/leerEscuela.php');
-        }elseif ($result['rol_usuario'] === 'Profesor'){
+        }elseif ($fila['rol_usuario'] === 'Profesor'){
             header('Location: ../entradas/leerAlumnos.php');
-        }elseif ($result['rol_usuario'] === 'Alumno'){
+        }elseif ($fila['rol_usuario'] === 'Alumno'){
             header('Location: ../entradas/leerNotas.php');
         }
-    } else {
+    }else {
         header("Location: ../index.php?error=1");
     }
 
