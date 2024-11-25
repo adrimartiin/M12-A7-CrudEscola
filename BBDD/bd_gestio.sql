@@ -11,7 +11,7 @@ CREATE TABLE tbl_usuario (
     email_usuario VARCHAR(60) NOT NULL,
     telf_usuario CHAR(9) NOT NULL,
     dni_usuario CHAR(9) NOT NULL,
-    rol_usuario ENUM('Admin', 'Alumno') DEFAULT 'Alumno' NOT NULL
+    rol_usuario ENUM('Admin', 'Alumno', 'Profesor') DEFAULT 'Alumno' NOT NULL
 );
 
 CREATE TABLE tbl_materias (
@@ -62,7 +62,16 @@ VALUES
 ('smendez', 'qweQWE123', 'sergio.mendez@gmail.com', '600999222', '61345678Z', 'Alumno'),
 ('pdominguez', 'qweQWE123', 'paula.dominguez@gmail.com', '600333999', '71345678A', 'Alumno'),
 ('haguilar', 'qweQWE123', 'hector.aguilar@gmail.com', '600555111', '81345678B', 'Alumno'),
-('mleon', 'qweQWE123', 'marina.leon@gmail.com', '600777333', '91345678C', 'Alumno');
+('mleon', 'qweQWE123', 'marina.leon@gmail.com', '600777333', '91345678C', 'Alumno'),
+('agonzalez', 'qweQWE123', 'alejandro.gonzalez@gmail.com', '612345622', '22345318J', 'Admin'),
+('halda', 'qweQWE123', 'hugo.alda@gmail.com', '436892504', '00318318J', 'Admin'),
+('amartin', 'qweQWE123', 'adri.martin@gmail.com', '708421504', '00318318J', 'Admin'),
+('kruiz', 'qweQWE123', 'kilian.ruiz@gmail.com', '381007698', '59234712B', 'Admin'),
+('fmartinez', 'qweQWE123', 'fatima.martinez@gmail.com', '123456789', '57921632C', 'Profesor'),
+('aplans', 'qweQWE123', 'agnes.plans@gmail.com', '896874891', '30092312T', 'Profesor'),
+('aDeSantos', 'qweQWE123', 'alberto.DeSantos@gmail.com', '674986789', '08921794K', 'Profesor');
+
+
 
 /* Datos para tbl_materias */
 INSERT INTO tbl_materias (nombre_materia, horas_materia)
@@ -90,3 +99,4 @@ VALUES
 (8, 8, 8.0),  
 (9, 9, 9.5),  
 (10, 1, 10.0);
+
