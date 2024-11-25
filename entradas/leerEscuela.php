@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">Navbar</a>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" name="nombre" type="search" placeholder="Nombre" aria-label="Nombre">
+                <input class="form-control me-2" name="dni" type="search" placeholder="DNI" aria-label="DNI">
+                <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+            </form>
+        </div>
+    </nav>
     <div class="container my-5">
-        <h1 class="text-center mb-4">Lista de Usuarios</h1>
+        <!-- <h1 class="text-center mb-4">Lista de Usuarios</h1> -->
         <?php
         session_start();
 
@@ -23,12 +36,7 @@
         $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
         $offset = ($paginaActual - 1) * $registrosPorPagina;
 
-        $sql = "SELECT 
-            id_usuario,
-            nombre_usuario,
-            email_usuario,
-            telf_usuario,
-            rol_usuario
+        $sql = "SELECT *
             FROM 
             tbl_usuario
             LIMIT $offset, $registrosPorPagina";
@@ -46,10 +54,10 @@
             echo "<table class='table table-bordered table-hover table-striped text-center'>";
             echo "<thead class='table-dark'>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Rol</th>
+                        <th>↓ DNI ↑</th>
+                        <th>↓ Nombre ↑</th>
+                        <th>↓ Email ↑</th>
+                        <th>↓ Teléfono ↑</th>
                         <th>Acciones</th>
                     </tr>
                   </thead>";
@@ -58,10 +66,10 @@
             $rows = $result->fetch_all(MYSQLI_ASSOC);
             foreach ($rows as $row) {
                 echo "<tr class='align-middle'>
+                        <td>" . htmlspecialchars($row["dni_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["nombre_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["email_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["telf_usuario"]) . "</td>
-                        <td>" . htmlspecialchars($row["rol_usuario"]) . "</td>
                         <td>
                             <a href='editarRegistro.php?id=" . htmlspecialchars($row["id_usuario"]) . "' class='btn btn-warning btn-sm me-2'>Editar</a>
                             <a href='eliminarRegistro.php?id=" . htmlspecialchars($row["id_usuario"]) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este usuario?\")'>Eliminar</a>
