@@ -1,3 +1,6 @@
+<?php
+    include_once '../filtros/filtros.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +15,9 @@
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand">Navbar</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" name="nombre" type="search" placeholder="Nombre" aria-label="Nombre">
-                <input class="form-control me-2" name="dni" type="search" placeholder="DNI" aria-label="DNI">
+            <form class="d-flex" method="get">
+                <input class="form-control me-2" name="nombre" value="<?php echo isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : ''; ?>" type="search" placeholder="Nombre" aria-label="Nombre">
+                <input class="form-control me-2" name="dni" value="<?php echo isset($_GET['dni']) ? htmlspecialchars($_GET['dni']) : ''; ?>" type="search" placeholder="DNI" aria-label="DNI">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
             </form>
