@@ -44,14 +44,19 @@
             tbl_usuario
             LIMIT $offset, $registrosPorPagina";
 
-        $result = $conn->query($sql);
-
-        // Obtener el número total de registros para calcular páginas
+        
         $sqlTotal = "SELECT COUNT(*) AS total FROM tbl_usuario";
         $totalResult = $conn->query($sqlTotal);
         $totalRows = $totalResult->fetch_assoc()['total'];
         $totalPaginas = ceil($totalRows / $registrosPorPagina);
 
+        // Obtener el número total de registros para calcular páginas
+        // Si no hay resultados se hace la query y si hay la variable resultados se iguala a la del archivo de los filtros
+        if(!$resultados){
+            $result = $conn->query($sql);
+        } else {
+            $result = $resultados;
+        }
         if ($result->num_rows > 0) {
             echo "<div class='table-responsive'>";
             echo "<table class='table table-bordered table-hover table-striped text-center'>";
