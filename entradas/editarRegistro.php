@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update'])) {
 
     $sql_update = "UPDATE tbl_usuario SET nombre_usuario = ?, email_usuario = ?, telf_usuario = ?, dni_usuario = ?, rol_usuario = ?";
 
-    // Si hay una nueva contraseña, añadirla a la consulta
+    // Si hay una nueva contraseña la añadimos a la consulta
     if (!empty($nueva_password_usuario)) {
         $password_hash = password_hash($nueva_password_usuario, PASSWORD_BCRYPT);
         $sql_update .= ", password_usuario = ?";
