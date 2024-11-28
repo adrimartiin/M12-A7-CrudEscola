@@ -132,6 +132,24 @@ form button:hover {
     background-color: #45a049;
 }
 
+/* Agregar margen entre los botones */
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+/* Estilo para los enlaces activos */
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Estilo para los enlaces desactivados */
+.pagination .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+
 
 /* Hacer que la tabla sea responsive */
 @media screen and (max-width: 768px) {

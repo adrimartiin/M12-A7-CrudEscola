@@ -16,18 +16,23 @@ require_once "../db/conexion.php";
 // Obtiene el ID del alumno desde la sesión
 $alumno_id = $_SESSION['usuario_id'];
 
+
 // Consulta para obtener las notas del alumno
 $sql = "SELECT m.nombre_materia AS assignatura, n.nota_alumno_materia AS nota
         FROM tbl_notas n
         INNER JOIN tbl_materias m ON n.id_materia = m.id_materia
-        WHERE n.id_usuario = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $alumno_id);
-$stmt->execute();
-$result = $stmt->get_result();
+        WHERE n.id_usuario = '$alumno_id'";
 
-// Cierra la conexión preparada
-$stmt->close();
+// Ejecutar la consulta
+$result = mysqli_query($conn, $sql);
+
+// Verifica si hay resultados
+if (!$result) {
+    die("Error en la consulta: " . mysqli_error($conn));
+}
+
+// Cierra la conexión a la base de datos
+mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,7 +54,7 @@ $stmt->close();
     <main>
         <div class="content">
             <h2>Mis Notas</h2>
-            <?php if ($result->num_rows > 0): ?>
+            <?php if (mysqli_num_rows($result) > 0): ?>
                 <table class="tabla-notas">
                     <thead>
                         <tr>
@@ -58,7 +63,7 @@ $stmt->close();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($row = $result->fetch_assoc()): ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($row['assignatura']); ?></td>
                                 <td><?php echo htmlspecialchars($row['nota']); ?></td>
@@ -73,3 +78,4 @@ $stmt->close();
     </main>
 </body>
 </html>
+

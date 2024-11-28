@@ -24,13 +24,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id_alumno !== '' && $id_materia !== '' && $nota !== '') {
         // Consulta para insertar la nueva nota
         $insert_sql = "INSERT INTO tbl_notas (id_usuario, id_materia, nota_alumno_materia) 
-                       VALUES ('$id_alumno', '$id_materia', '$nota')";
+                       VALUES (?, ?, ?)";
 
-        if (mysqli_query($conn, $insert_sql)) {
-            header("Location: ../entradas/leerAlumnos.php"); // Redirige a la lista de alumnos
-            exit();
+        // Prepara la consulta
+        if ($stmt = mysqli_prepare($conn, $insert_sql)) {
+            // Vincula los parámetros
+            mysqli_stmt_bind_param($stmt, "iis", $id_alumno, $id_materia, $nota);
+
+            // Ejecuta la consulta
+            if (mysqli_stmt_execute($stmt)) {
+                header("Location: ../entradas/leerAlumnos.php"); // Redirige a la lista de alumnos
+                exit();
+            } else {
+                echo "Error al insertar la nota.";
+            }
+
+            // Cierra la declaración
+            mysqli_stmt_close($stmt);
         } else {
-            echo "Error al insertar la nota.";
+            echo "Error en la preparación de la consulta.";
         }
     } else {
         echo "Por favor, complete todos los campos.";
@@ -40,3 +52,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Cierra la conexión
 mysqli_close($conn);
 ?>
+
