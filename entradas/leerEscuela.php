@@ -8,9 +8,15 @@ if (isset($_GET['clear_filters'])) {
     exit();
 }
 
+// Asegurarse de que el usuario esté autenticado (puedes adaptarlo según tu lógica de autenticación)
+if (!isset($_SESSION['nombre_completo'])) {
+    // Si la variable de sesión no está seteada, redirige al login o muestra un mensaje adecuado
+    header("Location: login.php");
+    exit();
+}
+
 // Conexión a la base de datos
 include_once('../db/conexion.php');
-
 
 $nombre = isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : '';
 $dni = isset($_GET['dni']) ? htmlspecialchars($_GET['dni']) : '';
@@ -53,9 +59,10 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
 <body>
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand"><?php echo $_SESSION['usuario']; ?></a>
+            <!-- Verificar si el nombre completo está en la sesión antes de mostrarlo -->
+            <a class="navbar-brand"><?php echo isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'; ?></a>
             <form class="d-flex" method="get">
-                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Nombre" aria-label="Nombre">
+                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Usuario" aria-label="Nombre">
                 <input class="form-control me-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 <a href="?clear_filters=1" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
@@ -71,6 +78,7 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
                     <tr>
                         <th>DNI</th>
                         <th>Nombre</th>
+                        <th>Usuario</th>
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Acciones</th>
@@ -81,6 +89,7 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
             while ($row = mysqli_fetch_assoc($result)) {
                 echo "<tr class='align-middle'>
                         <td>" . htmlspecialchars($row["dni_usuario"]) . "</td>
+                        <td>" . htmlspecialchars($row["nombre_completo"]) . "</td>
                         <td>" . htmlspecialchars($row["nombre_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["email_usuario"]) . "</td>
                         <td>" . htmlspecialchars($row["telf_usuario"]) . "</td>
@@ -118,4 +127,3 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
