@@ -14,7 +14,7 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] !== 'Profesor') {
 require_once "../db/conexion.php";
 
 // Configuración de la paginación
-$registrosPorPagina = 10;
+$registrosPorPagina = 6;  // Se muestran 6 registros por página
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $registrosPorPagina;
 
