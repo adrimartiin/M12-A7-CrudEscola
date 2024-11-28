@@ -1,6 +1,46 @@
 <?php
-    include_once '../filtros/filtros.php'; 
+include_once '../filtros/filtros.php';
+session_start();
+
+// Verificar si se debe limpiar filtros
+if (isset($_GET['clear_filters'])) {
+    header("Location: " . strtok($_SERVER['REQUEST_URI'], '?')); // Redirige para limpiar URL
+    exit();
+}
+
+// Conexión a la base de datos
+include_once('../db/conexion.php');
+
+
+$nombre = isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : '';
+$dni = isset($_GET['dni']) ? htmlspecialchars($_GET['dni']) : '';
+
+// Variables para paginación
+$registrosPorPagina = 8;
+$paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($paginaActual - 1) * $registrosPorPagina;
+
+// Consulta para obtener registros filtrados
+$whereClause = [];
+if (!empty($nombre)) {
+    $whereClause[] = "nombre_usuario LIKE '%$nombre%'";
+}
+if (!empty($dni)) {
+    $whereClause[] = "dni_usuario LIKE '%$dni%'";
+}
+$whereSQL = !empty($whereClause) ? "WHERE " . implode(" AND ", $whereClause) : "";
+
+$sql = "SELECT * FROM tbl_usuario $whereSQL LIMIT $offset, $registrosPorPagina";
+$result = mysqli_query($conn, $sql);
+
+// Consulta para obtener total de registros
+$sqlTotal = "SELECT COUNT(*) AS total FROM tbl_usuario $whereSQL";
+$totalResult = mysqli_query($conn, $sqlTotal);
+$totalRows = mysqli_fetch_assoc($totalResult)['total'];
+$totalPaginas = ceil($totalRows / $registrosPorPagina);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,49 +53,26 @@
 <body>
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand">Navbar</a>
+            <a class="navbar-brand"><?php echo $_SESSION['usuario']; ?></a>
             <form class="d-flex" method="get">
-                <input class="form-control me-2" name="nombre" value="<?php echo isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : ''; ?>" type="search" placeholder="Nombre" aria-label="Nombre">
-                <input class="form-control me-2" name="dni" value="<?php echo isset($_GET['dni']) ? htmlspecialchars($_GET['dni']) : ''; ?>" type="search" placeholder="DNI" aria-label="DNI">
+                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Nombre" aria-label="Nombre">
+                <input class="form-control me-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <button class="btn btn-outline-danger" type="submit"><i class="fa-solid fa-trash"></i></button>
+                <a href="?clear_filters=1" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
             </form>
         </div>
     </nav>
     <div class="container my-5">
         <?php
-        session_start();
-
-        // Conexión a la base de datos
-        include_once('../db/conexion.php');
-
-        if (!$conn) {
-            die("<div class='alert alert-danger text-center'>Error: La conexión a la base de datos no se estableció.</div>");
-        }
-
-        $registrosPorPagina = 10;
-        $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-        $offset = ($paginaActual - 1) * $registrosPorPagina;
-
-        // Consulta para obtener registros
-        $sql = "SELECT * FROM tbl_usuario LIMIT $offset, $registrosPorPagina";
-        $result = mysqli_query($conn, $sql);
-
-        // Consulta para obtener total de registros
-        $sqlTotal = "SELECT COUNT(*) AS total FROM tbl_usuario";
-        $totalResult = mysqli_query($conn, $sqlTotal);
-        $totalRows = mysqli_fetch_assoc($totalResult)['total'];
-        $totalPaginas = ceil($totalRows / $registrosPorPagina);
-
         if (mysqli_num_rows($result) > 0) {
             echo "<div class='table-responsive'>";
             echo "<table class='table table-bordered table-hover table-striped text-center'>";
             echo "<thead class='table-dark'>
                     <tr>
-                        <th>↓ DNI ↑</th>
-                        <th>↓ Nombre ↑</th>
-                        <th>↓ Email ↑</th>
-                        <th>↓ Teléfono ↑</th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
                         <th>Acciones</th>
                     </tr>
                   </thead>";
@@ -101,3 +118,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
