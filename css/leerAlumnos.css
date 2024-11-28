@@ -1,0 +1,163 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos para el header */
+header {
+    background-color: #100f0f;
+    color: white;
+    padding: 20px 0;
+}
+
+header .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5em;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background-color: #f44336;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: #d32f2f;
+}
+
+/* Estilos para el contenido principal */
+main {
+    padding: 20px 0;
+}
+
+.content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la tabla */
+.tabla-alumnos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-alumnos th, .tabla-alumnos td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabla-alumnos th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: bold;
+}
+
+.tabla-alumnos tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-alumnos tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tabla-alumnos td {
+    font-size: 1em;
+}
+
+/* Estilo para el mensaje de no alumnos */
+p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Botón de editar */
+.btn-editar {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.btn-editar:hover {
+    background-color: #d32f2f;
+}
+
+/* Estilo para los formularios */
+form {
+    margin-top: 20px;
+}
+
+form input {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Agregar margen entre los botones */
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+/* Estilo para los enlaces activos */
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Estilo para los enlaces desactivados */
+.pagination .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+
+
+/* Hacer que la tabla sea responsive */
+@media screen and (max-width: 768px) {
+    .tabla-alumnos {
+        font-size: 0.9em;
+    }
+    
+    .tabla-alumnos th, .tabla-alumnos td {
+        padding: 8px;
+    }
+}

@@ -13,9 +13,22 @@ try {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if (mysqli_num_rows($result) === 1) { // Comprueba si el usuario y contraseña coinciden
-        header("Location: ../entradas/leerEscuela.php");
-    } else {
+    if (mysqli_num_rows($result) === 1) { 
+        $fila = mysqli_fetch_assoc($result);
+        
+        $_SESSION['usuario_id']=$fila['id_usuario'];
+        // Comprueba si el usuario y contraseña coinciden
+        if ($fila['rol_usuario'] === 'Admin'){
+            $_SESSION['rol'] = $fila['rol_usuario'];
+            header('Location: ../entradas/leerEscuela.php');
+        }elseif ($fila['rol_usuario'] === 'Profesor'){
+            $_SESSION['rol'] = $fila['rol_usuario'];
+            header('Location: ../entradas/leerAlumnos.php');
+        }elseif ($fila['rol_usuario'] === 'Alumno'){
+            $_SESSION['rol'] = $fila['rol_usuario'];
+            header('Location: ../entradas/leerNotas.php');
+        }
+    }else {
         header("Location: ../index.php?error=1");
     }
 
