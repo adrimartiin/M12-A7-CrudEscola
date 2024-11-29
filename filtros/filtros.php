@@ -19,10 +19,11 @@
     }
     
     if (!empty($filtros)) {
-        $query = "SELECT nombre_usuario, dni_usuario FROM tbl_usuario";
+        $query = "SELECT * FROM tbl_usuario";
     
         $query .= ' WHERE ' . implode(' AND ', $filtros);
-    
+       
+
         $stmt = mysqli_prepare($conn, $query);
         if ($tipos) {
             mysqli_stmt_bind_param($stmt, $tipos, ...$parametros);
@@ -30,10 +31,13 @@
     
         mysqli_stmt_execute($stmt);
         $resultados = mysqli_stmt_get_result($stmt);
+        
     
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($filtros) && mysqli_num_rows($resultados) === 0) {
             $no_resultados = "No hay resultados para los filtros seleccionados.";
-        }
+        } 
+
+        // Limpiar filtros 
     } else {
         $resultados = null;
     }
