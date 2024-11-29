@@ -54,7 +54,7 @@ if (mysqli_num_rows($result) > 0):
 <body>
     <header>
         <div class="container">
-            <h1>Bienvenido, Profesor <?php echo $_SESSION['usuario']; ?></h1>
+            <h1>Bienvenido/a, Profesor/a <?php echo $_SESSION['usuario']; ?></h1>
             <nav>
                 <a href="../queries/logout.php" class="btn-logout">Cerrar Sesión</a>
                 <a href="crearNota.php" class="btn-crear">Crear Nota</a>
