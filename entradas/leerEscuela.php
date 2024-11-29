@@ -2,31 +2,25 @@
 include_once '../filtros/filtros.php';
 session_start();
 
-// Verificar si se debe limpiar filtros
 if (isset($_GET['clear_filters'])) {
-    header("Location: " . strtok($_SERVER['REQUEST_URI'], '?')); // Redirige para limpiar URL
+    header("Location: " . strtok($_SERVER['REQUEST_URI'], '?')); 
     exit();
 }
 
-// Asegurarse de que el usuario esté autenticado (puedes adaptarlo según tu lógica de autenticación)
 if (!isset($_SESSION['nombre_completo'])) {
-    // Si la variable de sesión no está seteada, redirige al login o muestra un mensaje adecuado
     header("Location: login.php");
     exit();
 }
 
-// Conexión a la base de datos
 include_once('../db/conexion.php');
 
 $nombre = isset($_GET['nombre']) ? htmlspecialchars($_GET['nombre']) : '';
 $dni = isset($_GET['dni']) ? htmlspecialchars($_GET['dni']) : '';
 
-// Variables para paginación
 $registrosPorPagina = 8;
 $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $offset = ($paginaActual - 1) * $registrosPorPagina;
 
-// Consulta para obtener registros filtrados
 $whereClause = [];
 if (!empty($nombre)) {
     $whereClause[] = "nombre_usuario LIKE '%$nombre%'";
@@ -39,7 +33,6 @@ $whereSQL = !empty($whereClause) ? "WHERE " . implode(" AND ", $whereClause) : "
 $sql = "SELECT * FROM tbl_usuario $whereSQL LIMIT $offset, $registrosPorPagina";
 $result = mysqli_query($conn, $sql);
 
-// Consulta para obtener total de registros
 $sqlTotal = "SELECT COUNT(*) AS total FROM tbl_usuario $whereSQL";
 $totalResult = mysqli_query($conn, $sqlTotal);
 $totalRows = mysqli_fetch_assoc($totalResult)['total'];
@@ -57,18 +50,25 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-        <div class="container-fluid">
-            <!-- Verificar si el nombre completo está en la sesión antes de mostrarlo -->
-            <a class="navbar-brand"><?php echo isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'; ?></a>
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto"><p>Bienvenido/a <?php echo "Bienvenido " . (isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'); ?></p></a>
+
+        <div class="d-flex justify-content-center flex-grow-1">
             <form class="d-flex" method="get">
-                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Usuario" aria-label="Nombre">
-                <input class="form-control me-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI">
+                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Usuario" aria-label="Nombre" style="max-width: 200px;">
+                <input class="form-control me-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI" style="max-width: 200px;">
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <a href="?clear_filters=1" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
             </form>
         </div>
-    </nav>
+
+        <div class="d-flex ms-3">
+            <a href="?clear_filters=1" class="btn btn-outline-danger btn-sm mx-2"><i class="fa-solid fa-trash"></i></a>
+            <a href="../queries/logout.php" class="btn btn-outline-light btn-sm mx-2">Cerrar Sesión</a>
+        </div>
+    </div>
+</nav>
+
     <div class="container my-5">
         <?php
         if (mysqli_num_rows($result) > 0) {
