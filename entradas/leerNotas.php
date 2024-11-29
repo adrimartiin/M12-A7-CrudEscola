@@ -12,11 +12,10 @@ require_once "../db/conexion.php";
 $alumno_id = $_SESSION['usuario_id'];
 
 // Consulta para obtener las notas del alumno
-$sql = "SELECT m.nombre_materia AS assignatura, n.nota_alumno_materia AS nota
+$sql = "SELECT m.nombre_materia AS asignatura, n.nota_alumno_materia AS nota
         FROM tbl_notas n
         INNER JOIN tbl_materias m ON n.id_materia = m.id_materia
-        WHERE n.id_usuario = '$alumno_id'
-        LIMIT $inicio, $registros_por_pagina";
+        WHERE n.id_usuario = '$alumno_id'";
 
 $result = mysqli_query($conn, $sql);
 
@@ -24,9 +23,15 @@ if (!$result) {
     die("Error en la consulta: " . mysqli_error($conn));
 }
 
+// Consulta para calcular la media final del alumno
+$sqlMedia = "SELECT ROUND(AVG(nota_alumno_materia), 2) AS media_final
+             FROM tbl_notas
+             WHERE id_usuario = '$alumno_id'";
+$mediaResult = mysqli_query($conn, $sqlMedia);
+$mediaFinal = mysqli_fetch_assoc($mediaResult)['media_final'];
+
 mysqli_close($conn);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,8 +45,10 @@ mysqli_close($conn);
     <!-- Barra de navegación -->
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-        <a class="navbar-brand"><p>Bienvenido/a <?php echo "Bienvenido " . isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'; ?></p></a>
-        <div class="d-flex">
+            <a class="navbar-brand">
+                <p>Bienvenido/a <?php echo isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'; ?></p>
+            </a>
+            <div class="d-flex">
                 <a href="../queries/logout.php" class="btn btn-outline-light ms-auto">Cerrar Sesión</a>
             </div>
         </div>
@@ -66,6 +73,11 @@ mysqli_close($conn);
                                 <td><?php echo htmlspecialchars($row['nota']); ?></td>
                             </tr>
                         <?php endwhile; ?>
+                        <!-- Fila para la media final -->
+                        <tr class="table-success">
+                            <td><strong>Media Final</strong></td>
+                            <td><strong><?php echo $mediaFinal; ?></strong></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
