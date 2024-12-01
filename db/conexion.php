@@ -1,7 +1,7 @@
 <?php
 $dbserver = "localhost";
 $dbusername = "root";
-$dbpassword = "";
+$dbpassword = "1478";
 $dbname = "bd_gestio";
 
 try {

@@ -47,24 +47,113 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
     <title>Lista de Usuarios</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar-brand{
+            padding-right: 20px;
+        }
+        
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #212529; /* Oscuro */
+            color: #fff;
+        }
+
+        .navbar .brand {
+            font-size: 18px;
+            font-weight: bold;
+            margin-left:10px;
+        }
+
+        .navbar .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar input[type="text"] {
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        .navbar button {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 576px) {
+            .navbar {
+                flex-wrap: wrap; /* Permite dividir elementos en múltiples filas */
+            }
+            
+            .navbar .navbar-brand {
+                width: 100%; /* La marca ocupa todo el ancho */
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .navbar .search-container {
+                flex-direction: column; /* Coloca los elementos uno debajo del otro */
+                width: 100%;
+            }
+
+            .navbar .search-container input,
+            .navbar .search-container button {
+                width: 100%; /* Inputs y botón ocupan todo el ancho */
+                margin-bottom: 10px; /* Espaciado entre elementos */
+            }
+
+            .navbar .actions {
+                flex-direction: column; /* Botones en columna */
+                width: 100%;
+            }
+
+            .navbar .actions a {
+                width: 100%; /* Botones ocupan todo el ancho */
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand me-auto"><p>Bienvenido/a <?php echo "Bienvenido " . (isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'); ?></p></a>
+        <!-- Marca de bienvenida -->
+        <a class="navbar-brand me-auto">
+            <p>Bienvenido/a <?php echo "Bienvenido " . (isset($_SESSION['nombre_completo']) ? $_SESSION['nombre_completo'] : 'Usuario no autenticado'); ?></p>
+        </a>
 
-        <div class="d-flex justify-content-center flex-grow-1">
-            <form class="d-flex" method="get">
-                <input class="form-control me-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Usuario" aria-label="Nombre" style="max-width: 200px;">
-                <input class="form-control me-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI" style="max-width: 200px;">
-                <button class="btn btn-outline-success me-2" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                <a href="?clear_filters=1" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash"></i></a>
+        <!-- Contenedor de búsqueda -->
+        <div class="search-container d-flex flex-column flex-md-row flex-grow-1">
+            <form class="d-flex flex-column flex-md-row w-100" method="get">
+                <input class="form-control mb-2 mb-md-0 me-md-2" name="nombre" value="<?php echo $nombre; ?>" type="search" placeholder="Usuario" aria-label="Nombre">
+                <input class="form-control mb-2 mb-md-0 me-md-2" name="dni" value="<?php echo $dni; ?>" type="search" placeholder="DNI" aria-label="DNI">
+                <button class="btn btn-outline-success" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </form>
         </div>
 
-        <div class="d-flex ms-3">
-            <a href="agregarAlumno.php" class="btn btn-outline-primary btn-sm mx-2">Añadir Alumno</a>
-            <a href="../queries/logout.php" class="btn btn-outline-light btn-sm mx-2">Cerrar Sesión</a>
+        <!-- Botones de acciones -->
+        <div class="actions d-flex flex-column flex-md-row ms-md-3">
+            <a href="?clear_filters=1" class="btn btn-outline-danger btn-sm mb-2 mb-md-0 me-md-2">
+                <i class="fa-solid fa-trash"></i>
+            </a>
+            <a href="../queries/logout.php" class="btn btn-outline-light btn-sm">
+                Cerrar Sesión
+            </a>
         </div>
     </div>
 </nav>
@@ -127,4 +216,3 @@ $totalPaginas = ceil($totalRows / $registrosPorPagina);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
