@@ -21,42 +21,21 @@ body {
     height: 100%;
 }
 
-.container-form {
-    display: flex;
-    flex-direction: row; /* Imagen y formulario en fila */
+.container form {
     background-color: #ffffff;
     padding: 30px 40px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
     width: 100%;
-    max-width: 800px; /* Máximo ancho para el formulario */
-    align-items: center;
 }
 
-.container-left {
-    flex: 0 0 30%; /* La imagen ocupa un 30% del ancho */
+h2 {
     text-align: center;
-    padding: 10px;
-}
-
-.login-image {
-    width: 100%; /* La imagen ocupa todo el ancho disponible */
-    max-width: 400px; /* Tamaño máximo */
-    height: auto;
-    border-radius: 8px;
-}
-
-.container-right {
-    flex: 1;
-    padding: 0 20px;
-}
-
-#login-title {
     color: #2c3e50;
     font-size: 24px;
-    font-weight: bold;
     margin-bottom: 20px;
-    text-align: center;
+    padding-top: 10px; /* Añadido para margen superior */
 }
 
 label {
@@ -67,7 +46,9 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="email"],
+input[type="password"],
+select.form-select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -78,15 +59,11 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="email"]:focus,
+input[type="password"]:focus,
+select.form-select:focus {
     border-color: #3498db;
     outline: none;
-}
-
-.error-message {
-    color: #ff1900;
-    text-align: center;
-    font-size: 15px;
 }
 
 button[type="submit"] {
@@ -109,26 +86,39 @@ button[type="submit"]:active {
     background-color: #2471a3;
 }
 
-/* Media query para pantallas pequeñas */
-@media (max-width: 768px) {
-    .container-form {
-        flex-direction: column; /* Apila todos los elementos */
+a.btn.btn-secondary {
+    width: 100%;
+    padding: 12px;
+    background-color: #7f8c8d;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+a.btn.btn-secondary:hover {
+    background-color: #95a5a6;
+}
+
+.error-message {
+    color: #ff1900;
+    text-align: center;
+    font-size: 15px;
+}
+
+.error-border {
+    border: 1px solid #ff1900 !important;
+}
+
+@media (max-width: 500px) {
+    .container form {
+        padding: 20px;
     }
 
-    .container-left {
-        max-width: 100%; /* La imagen ocupa todo el ancho */
-        margin-bottom: 20px;
-    }
-
-    .container-right {
-        width: 100%; /* El formulario ocupa todo el ancho */
-    }
-
-    .login-image {
-        max-width: 400px; /* Tamaño reducido para pantallas pequeñas */
-    }
-
-    #login-title {
-        font-size: 22px;
+    h2 {
+        font-size: 20px;
     }
 }
