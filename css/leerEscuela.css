@@ -1,0 +1,69 @@
+/* Ajuste de estilos */
+.navbar-brand p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.search-container input {
+    width: 150px;
+    padding: 4px 8px;
+    font-size: 0.875rem;
+}
+
+.search-container button {
+    font-size: 0.875rem;
+    padding: 4px 8px;
+}
+
+.navbar .container-fluid {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-brand {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .navbar-brand {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-container {
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .search-container input,
+    .search-container button {
+        width: 100%;
+        max-width: none;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .actions a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
