@@ -88,5 +88,6 @@ mysqli_close($conn);
             </form>
         </div>
     </main>
+<script src="../validacionesJS/validacionEditarNota.js"></script>
 </body>
 </html>

@@ -67,6 +67,7 @@ $result_materias = mysqli_query($conn, $sql_materias);
             </form>
         </div>
     </main>
+<script src="../validacionesJS/validacionNota.js"></script>
 </body>
 </html>
 
